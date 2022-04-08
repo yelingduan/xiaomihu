@@ -1,8 +1,8 @@
-%¶ÁÈ¡»Ò¶ÈÍ¼Æ¬
+%ë—í˜¤ë¿ë˜‘æš íŠ¬
 original=imread('scene.pgm');
-distorted=imread('book.pgm');
+distorted=imread('book.pgm'); 
 
-% ÌØÕ÷ÌáÈ¡
+% æ™¯ç€ç“Ší˜¤
 % ptsOriginal  = detectSURFFeatures(original);
 % ptsDistorted = detectSURFFeatures(distorted);
 ptsOriginal  = detectBRISKFeatures(original,'MinContrast',0.01);
@@ -13,7 +13,7 @@ ptsDistorted = detectBRISKFeatures(distorted,'MinContrast',0.01);
 [featuresDistorted,validPtsDistorted] = ...
             extractFeatures(distorted,ptsDistorted);
 
-%ÌØÕ÷Æ¥Åä        
+%æ™¯ç€íŠˆí†         
 indexPairs = matchFeatures(featuresOriginal,featuresDistorted,'MatchThreshold',50,'MaxRatio',0.8);
 
 matchedOriginal  = validPtsOriginal(indexPairs(:,1));
@@ -23,7 +23,7 @@ figure
 showMatchedFeatures(original,distorted,matchedOriginal,matchedDistorted)
 title('Candidate matched points (including outliers)')
 
-% ¼ÆËã¼¸ºÎ±ä»»
+% ì…•ç‚¬ì„¯ë¶€ê¸´ë»£
 [tformTotal,inlierDistortedXY,inlierOriginalXY] = ...
     estimateGeometricTransform(matchedDistorted,...
         matchedOriginal,'similarity');
@@ -33,7 +33,7 @@ showMatchedFeatures(original,distorted,inlierOriginalXY,inlierDistortedXY)
 title('Matching points (inliers only)')
 legend('ptsOriginal','ptsDistorted')
 
-%Ó¦ÓÃ¼¸ºÎ±ä»»
+%å£‡ç—°ì„¯ë¶€ê¸´ë»£
 outputView = imref2d(size(original));
 recovered  = imwarp(distorted,tformTotal,'OutputView',outputView);
 
